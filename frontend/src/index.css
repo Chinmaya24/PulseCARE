@@ -1,0 +1,142 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 246 80% 60%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 260 80% 60%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 160 84% 39%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 246 80% 60%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 246 80% 60%;
+    --sidebar-primary: 246 80% 60%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 246 80% 60%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 246 80% 60%;
+  }
+
+  .dark {
+    --background: 240 10% 4%;
+    --foreground: 210 40% 98%;
+
+    --card: 240 10% 4%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 240 10% 4%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 246 80% 60%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 260 80% 60%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 160 84% 39%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 246 80% 60%;
+    
+    --sidebar-background: 240 10% 6%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 246 80% 60%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 246 80% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .medical-card {
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-200 hover:shadow-lg;
+  }
+  
+  .stat-card {
+    @apply p-6 rounded-xl shadow-sm transition-all duration-200 hover:shadow-md flex flex-col;
+  }
+  
+  .stat-card-clinician {
+    @apply bg-gradient-to-br from-medical-light to-white dark:from-medical-dark/50 dark:to-gray-800 border border-medical-primary/20;
+  }
+  
+  .stat-card-patient {
+    @apply bg-gradient-to-br from-blue-50 to-white dark:from-blue-900/30 dark:to-gray-800 border border-patient-primary/20;
+  }
+  
+  .stat-card-admin {
+    @apply bg-gradient-to-br from-purple-50 to-white dark:from-purple-900/30 dark:to-gray-800 border border-admin-primary/20;
+  }
+  
+  .stat-card-ngo {
+    @apply bg-gradient-to-br from-green-50 to-white dark:from-green-900/30 dark:to-gray-800 border border-ngo-primary/20;
+  }
+  
+  .badge-status {
+    @apply text-xs font-medium px-2.5 py-0.5 rounded-full;
+  }
+  
+  .badge-status-success {
+    @apply bg-status-success/20 text-status-success dark:bg-status-success/30;
+  }
+  
+  .badge-status-warning {
+    @apply bg-status-warning/20 text-status-warning dark:bg-status-warning/30;
+  }
+  
+  .badge-status-error {
+    @apply bg-status-error/20 text-status-error dark:bg-status-error/30;
+  }
+  
+  .badge-status-info {
+    @apply bg-status-info/20 text-status-info dark:bg-status-info/30;
+  }
+}
