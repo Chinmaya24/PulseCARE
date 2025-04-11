@@ -99,7 +99,7 @@ export const PatientSidebar = () => {
           <SidebarMenu className="mt-4">
             <SidebarGroupLabel>Resources</SidebarGroupLabel>
             <SidebarLink
-  to="https://healthlycar.netlify.app/"
+  to="https://pulcareedu.netlify.app/"
   external={true}
   icon={Info}
   label="Health Education"
