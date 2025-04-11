@@ -99,11 +99,12 @@ export const PatientSidebar = () => {
           <SidebarMenu className="mt-4">
             <SidebarGroupLabel>Resources</SidebarGroupLabel>
             <SidebarLink
-              to="/patient/education"
-              icon={Info}
-              label="Health Education"
-              active={location.pathname.startsWith("/patient/education")}
-            />
+  to="https://pulcareedu.netlify.app/"
+  external={true}
+  icon={Info}
+  label="Health Education"
+  active={false} // since it's external, route matching doesn't apply
+/>
             <SidebarLink
               to="/patient/diet"
               icon={Utensils}
