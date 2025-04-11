@@ -40,3 +40,9 @@
 .read-the-docs {
   color: #888;
 }
+.accessibility-toolbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 50;
+}
