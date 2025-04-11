@@ -1,4 +1,3 @@
-
 import {
   Activity,
   CalendarClock,
@@ -28,6 +27,8 @@ import { useNavigate } from "react-router-dom";
 
 const PatientDashboard = () => {
   const navigate = useNavigate();
+
+  console.log("PatientDashboard rendering"); // Debug log
 
   // Sample data for metrics
   const metrics = [
@@ -174,84 +175,81 @@ const PatientDashboard = () => {
             </Tabs>
           </CardHeader>
           <CardContent>
-            <TabsContent value="vitals" className="mt-0">
-              <div className="h-[300px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={vitalsData} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                    <XAxis dataKey="day" tickLine={false} axisLine={false} />
-                    <YAxis tickLine={false} axisLine={false} />
-                    <Tooltip />
-                    <Line 
-                      type="monotone" 
-                      dataKey="bp" 
-                      name="Blood Pressure" 
-                      stroke="#0ea5e9" 
-                      strokeWidth={2} 
-                      dot={{ r: 4 }} 
-                      activeDot={{ r: 6 }} 
-                    />
-                    <Line 
-                      type="monotone" 
-                      dataKey="heartRate" 
-                      name="Heart Rate" 
-                      stroke="#ef4444" 
-                      strokeWidth={2} 
-                      dot={{ r: 4 }} 
-                      activeDot={{ r: 6 }} 
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </TabsContent>
-            <TabsContent value="symptoms" className="mt-0">
-              <div className="h-[300px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={symptomData} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                    <XAxis dataKey="day" tickLine={false} axisLine={false} />
-                    <YAxis tickLine={false} axisLine={false} />
-                    <Tooltip />
-                    <Area 
-                      type="monotone" 
-                      dataKey="pain" 
-                      name="Pain Level" 
-                      stroke="#ef4444" 
-                      fill="#ef444420" 
-                      activeDot={{ r: 6 }} 
-                    />
-                    <Area 
-                      type="monotone" 
-                      dataKey="fatigue" 
-                      name="Fatigue" 
-                      stroke="#f59e0b" 
-                      fill="#f59e0b20" 
-                      activeDot={{ r: 6 }} 
-                    />
-                    <Area 
-                      type="monotone" 
-                      dataKey="headache" 
-                      name="Headache" 
-                      stroke="#8b5cf6" 
-                      fill="#8b5cf620" 
-                      activeDot={{ r: 6 }} 
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
-            </TabsContent>
+            <Tabs defaultValue="vitals">
+              <TabsContent value="vitals" className="mt-0">
+                <div className="h-[300px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={vitalsData} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+                      <XAxis dataKey="day" tickLine={false} axisLine={false} />
+                      <YAxis tickLine={false} axisLine={false} />
+                      <Tooltip />
+                      <Line 
+                        type="monotone" 
+                        dataKey="bp" 
+                        name="Blood Pressure" 
+                        stroke="#0ea5e9" 
+                        strokeWidth={2} 
+                        dot={{ r: 4 }} 
+                        activeDot={{ r: 6 }} 
+                      />
+                      <Line 
+                        type="monotone" 
+                        dataKey="heartRate" 
+                        name="Heart Rate" 
+                        stroke="#ef4444" 
+                        strokeWidth={2} 
+                        dot={{ r: 4 }} 
+                        activeDot={{ r: 6 }} 
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </TabsContent>
+              <TabsContent value="symptoms" className="mt-0">
+                <div className="h-[300px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={symptomData} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+                      <XAxis dataKey="day" tickLine={false} axisLine={false} />
+                      <YAxis tickLine={false} axisLine={false} />
+                      <Tooltip />
+                      <Area 
+                        type="monotone" 
+                        dataKey="pain" 
+                        name="Pain Level" 
+                        stroke="#ef4444" 
+                        fill="#ef444420" 
+                        activeDot={{ r: 6 }} 
+                      />
+                      <Area 
+                        type="monotone" 
+                        dataKey="fatigue" 
+                        name="Fatigue" 
+                        stroke="#f59e0b" 
+                        fill="#f59e0b20" 
+                        activeDot={{ r: 6 }} 
+                      />
+                      <Area 
+                        type="monotone" 
+                        dataKey="headache" 
+                        name="Headache" 
+                        stroke="#8b5cf6" 
+                        fill="#8b5cf620" 
+                        activeDot={{ r: 6 }} 
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
 
         <Card className="col-span-1">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Recent Updates</CardTitle>
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="text-xs h-8" 
-              onClick={() => navigate("/patient/appointments")}
-            >
+            <Button variant="ghost" size="sm" className="text-xs h-8" onClick={() => navigate("/patient/appointments")}>
               View All
             </Button>
           </CardHeader>
