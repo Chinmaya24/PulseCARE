@@ -116,6 +116,12 @@ export const NGOSidebar = () => {
               label="Healthcare Facilities"
               active={location.pathname.startsWith("/ngo/facilities")}
             />
+            <SidebarLink
+              to="/ngo/schemes"
+              icon={Building}
+              label="Government Schemes"
+              active={location.pathname.startsWith("/ngo/schemes")}
+            />
           </SidebarMenu>
         </div>
       </SidebarContent>

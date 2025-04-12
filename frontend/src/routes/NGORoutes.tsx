@@ -18,6 +18,7 @@ const HealthDrives = lazy(() => import("@/pages/ngo/HealthDrives"));
 const Reports = lazy(() => import("@/pages/ngo/Reports"));
 const Impact = lazy(() => import("@/pages/ngo/Impact"));
 const HealthcareFacilities = lazy(() => import("@/pages/ngo/HealthcareFacilities"));
+const GovernmentSchemes = lazy(() => import("@/pages/ngo/Scheme"));
 
 export const NGORoutes = () => {
   return (
@@ -78,6 +79,14 @@ export const NGORoutes = () => {
           element={
             <Suspense fallback={<LoadingFallback />}>
               <HealthcareFacilities />
+            </Suspense>
+          }
+        />
+        <Route
+          path="schemes"
+          element={
+            <Suspense fallback={<LoadingFallback />}>
+              <GovernmentSchemes />
             </Suspense>
           }
         />
