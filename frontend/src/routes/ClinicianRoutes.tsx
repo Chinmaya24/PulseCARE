@@ -1,10 +1,16 @@
-
 import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { ProtectedRoutes } from "./ProtectedRoutes";
 
 // Use lazy loading for optimization
 const ClinicianDashboard = lazy(() => import("@/pages/clinician/ClinicianDashboard"));
+const Patients = lazy(() => import("@/pages/clinician/Patients"));
+const DailyRounds = lazy(() => import("@/pages/clinician/DailyRounds"));
+const RecordVitals = lazy(() => import("@/pages/clinician/RecordVitals"));
+const Medications = lazy(() => import("@/pages/clinician/Medications"));
+const VoiceNotes = lazy(() => import("@/pages/clinician/VoiceNotes"));
+const Appointments = lazy(() => import("@/pages/clinician/Appointments"));
+const Reports = lazy(() => import("@/pages/clinician/Reports"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 export const ClinicianRoutes = () => {
@@ -20,13 +26,13 @@ export const ClinicianRoutes = () => {
         }
       >
         <Route path="dashboard" element={<ClinicianDashboard />} />
-        <Route path="patients" element={<div>Patients</div>} />
-        <Route path="rounds" element={<div>Daily Rounds</div>} />
-        <Route path="vitals" element={<div>Record Vitals</div>} />
-        <Route path="medications" element={<div>Medications</div>} />
-        <Route path="voice-notes" element={<div>Voice Notes</div>} />
-        <Route path="appointments" element={<div>Appointments</div>} />
-        <Route path="reports" element={<div>Reports</div>} />
+        <Route path="patients" element={<Patients />} />
+        <Route path="rounds" element={<DailyRounds />} />
+        <Route path="vitals" element={<RecordVitals />} />
+        <Route path="medications" element={<Medications />} />
+        <Route path="voice-notes" element={<VoiceNotes />} />
+        <Route path="appointments" element={<Appointments />} />
+        <Route path="reports" element={<Reports />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
