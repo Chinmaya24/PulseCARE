@@ -88,12 +88,6 @@ export const NGOSidebar = () => {
               label="Patients Referred"
               active={location.pathname.startsWith("/ngo/patients")}
             />
-            <SidebarLink
-              to="/ngo/doctors"
-              icon={UserRound}
-              label="Partner Doctors"
-              active={location.pathname.startsWith("/ngo/doctors")}
-            />
           </SidebarMenu>
 
           <SidebarMenu className="mt-4">

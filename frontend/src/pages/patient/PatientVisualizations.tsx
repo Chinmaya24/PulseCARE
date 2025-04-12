@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   ChevronRight, 
@@ -38,6 +37,7 @@ interface Visualization {
   date: string;
   duration: string;
   language: string;
+  videoUrl?: string; // Made optional to handle visualizations without URLs
 }
 
 interface BodyArea {
@@ -55,6 +55,7 @@ const PatientVisualizations = () => {
   const [medicalDescription, setMedicalDescription] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
   const [selectedVisualization, setSelectedVisualization] = useState<Visualization | null>(null);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   // Sample visualization library
   const visualizations: Visualization[] = [
@@ -62,63 +63,124 @@ const PatientVisualizations = () => {
       id: "1",
       title: "Hypertension and Blood Vessel Impact",
       description: "Visualization of how high blood pressure affects your blood vessels over time.",
-      thumbnail: "https://via.placeholder.com/200?text=Hypertension",
+      thumbnail: "https://i.pinimg.com/736x/dc/af/0e/dcaf0ed2ae957b6f050e72af7db15cd7.jpg",
       category: "heart",
       date: "October 15, 2025",
       duration: "4:32",
-      language: "english"
+      language: "english",
+      videoUrl: "https://youtu.be/sOwBDmu1Y0c?si=eYaBEfBta1M-8ZQk"
     },
     {
       id: "2",
       title: "Type 2 Diabetes Explained",
       description: "Visual explanation of insulin resistance and blood sugar management.",
-      thumbnail: "https://via.placeholder.com/200?text=Diabetes",
+      thumbnail: "https://media.post.rvohealth.io/wp-content/uploads/2020/09/doctor_glucosmeter_patient_hand-732x549-thumbnail-732x549.jpg",
       category: "other",
       date: "October 8, 2025",
       duration: "5:16",
-      language: "english"
+      language: "english",
+      videoUrl: "https://www.youtube.com/watch?v=4WQGK4LQzHs"
     },
     {
       id: "3",
       title: "Asthma and Bronchial Tubes",
       description: "How asthma affects your airways and breathing patterns.",
-      thumbnail: "https://via.placeholder.com/200?text=Asthma",
+      thumbnail: "https://cdn.storymd.com/optimized/Ro68LDTXqx/thumbnail.webp",
       category: "lungs",
       date: "September 20, 2025",
       duration: "3:51",
-      language: "english"
+      language: "english",
+      videoUrl: "https://www.youtube.com/watch?v=PwLjZpqbRYg"
     },
     {
       id: "4",
       title: "मधुमेह की समझ (Diabetes Understanding)",
       description: "A comprehensive explanation of Type 2 Diabetes in Hindi.",
-      thumbnail: "https://via.placeholder.com/200?text=Hindi+Diabetes",
+      thumbnail: "https://media.istockphoto.com/id/2159951400/video/woman-using-a-blood-glucose-test-to-check-her-blood-sugar.jpg?s=640x640&k=20&c=uWrwix5ZY43k9lz0jRUVHWTKq8tUZBJR8gMGXLU3nnU=",
       category: "other",
       date: "September 15, 2025",
       duration: "4:45",
-      language: "hindi"
+      language: "hindi",
+      videoUrl: "https://www.youtube.com/watch?v=wN_eBzQ0XjE"
     },
     {
       id: "5",
       title: "Heart Attack Progression",
       description: "Visualization of a heart attack from blockage to muscle damage.",
-      thumbnail: "https://via.placeholder.com/200?text=Heart+Attack",
+      thumbnail: "https://media.istockphoto.com/id/1128931450/photo/heart-attack-concept.jpg?s=612x612&w=0&k=20&c=XHOhTXhpZMSV6XIhXLbH6uvNQjZQS93b1UetGfqQXtI=",
       category: "heart",
       date: "August 28, 2025",
       duration: "6:12",
-      language: "english"
+      language: "english",
+      videoUrl: "https://www.youtube.com/watch?v=YAzxXJiBqLI"
     },
     {
       id: "6",
       title: "Alzheimer's Disease Progression",
       description: "How Alzheimer's affects the brain over time.",
-      thumbnail: "https://via.placeholder.com/200?text=Alzheimer",
+      thumbnail: "https://ayurdhama.com/wp-content/uploads/2023/07/Alzheimers-disease-1.png",
       category: "brain",
       date: "August 10, 2025",
       duration: "7:24",
-      language: "english"
+      language: "english",
+      videoUrl: "https://www.youtube.com/watch?v=nKLL8eQ4p-E"
     }
   ];
+
+  // Function to convert YouTube URL to embed URL
+  const getYouTubeEmbedUrl = (url: string): string => {
+    // Handle different YouTube URL formats
+    let videoId = "";
+    
+    // Format: https://youtu.be/VIDEOID
+    if (url.includes("youtu.be")) {
+      const parts = url.split("/");
+      videoId = parts[parts.length - 1].split("?")[0];
+    }
+    // Format: https://www.youtube.com/watch?v=VIDEOID
+    else if (url.includes("youtube.com/watch")) {
+      const urlParams = new URLSearchParams(url.split("?")[1]);
+      videoId = urlParams.get("v") || "";
+    }
+    
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+  };
+  
+  // Function to get category gradient background
+  const getCategoryGradient = (category: string): string => {
+    switch(category) {
+      case "heart":
+        return "bg-gradient-to-br from-red-500/70 to-rose-700/70";
+      case "lungs":
+        return "bg-gradient-to-br from-blue-500/70 to-sky-700/70";
+      case "digestive":
+        return "bg-gradient-to-br from-orange-500/70 to-amber-700/70";
+      case "brain":
+        return "bg-gradient-to-br from-purple-500/70 to-violet-700/70";
+      case "skeletal":
+        return "bg-gradient-to-br from-gray-500/70 to-zinc-700/70";
+      default:
+        return "bg-gradient-to-br from-emerald-500/70 to-teal-700/70";
+    }
+  };
+  
+  // Function to get category icon
+  const getCategoryIcon = (category: string) => {
+    switch(category) {
+      case "heart":
+        return <Heart className="h-3 w-3" />;
+      case "lungs":
+        return <Flame className="h-3 w-3" />;
+      case "digestive":
+        return <Flame className="h-3 w-3" />;
+      case "brain":
+        return <Flame className="h-3 w-3" />;
+      case "skeletal":
+        return <Flame className="h-3 w-3" />;
+      default:
+        return <Flame className="h-3 w-3" />;
+    }
+  };
 
   // Define body areas for selection
   const bodyAreas: BodyArea[] = [
@@ -186,10 +248,16 @@ const PatientVisualizations = () => {
 
   const handleVisualizationSelect = (visualization: Visualization) => {
     setSelectedVisualization(visualization);
+    setIsVideoPlaying(false); // Reset video state when selecting a new visualization
   };
 
   const handleBackToLibrary = () => {
     setSelectedVisualization(null);
+    setIsVideoPlaying(false);
+  };
+
+  const handlePlayVisualization = () => {
+    setIsVideoPlaying(true);
   };
 
   return (
@@ -242,7 +310,11 @@ const PatientVisualizations = () => {
                   <Download className="mr-2 h-4 w-4" />
                   Download
                 </Button>
-                <Button size="sm" className="flex items-center">
+                <Button 
+                  size="sm" 
+                  className="flex items-center"
+                  onClick={handlePlayVisualization}
+                >
                   <Play className="mr-2 h-4 w-4" />
                   Play
                 </Button>
@@ -251,14 +323,28 @@ const PatientVisualizations = () => {
           </CardHeader>
           <CardContent>
             <div className="aspect-video bg-black/10 rounded-lg flex items-center justify-center border overflow-hidden">
-              <div className="flex flex-col items-center gap-4">
-                <ImageIcon className="h-16 w-16 text-muted-foreground/50" />
-                <p className="text-muted-foreground">Video player would appear here</p>
-                <Button className="flex items-center gap-2">
-                  <Play className="h-4 w-4" />
-                  Play Visualization
-                </Button>
-              </div>
+              {isVideoPlaying && selectedVisualization.videoUrl ? (
+                <iframe
+                  src={getYouTubeEmbedUrl(selectedVisualization.videoUrl)}
+                  className="w-full h-full"
+                  title={selectedVisualization.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                ></iframe>
+              ) : (
+                <div className="flex flex-col items-center gap-4">
+                  <ImageIcon className="h-16 w-16 text-muted-foreground/50" />
+                  <p className="text-muted-foreground">Click to play visualization</p>
+                  <Button 
+                    className="flex items-center gap-2"
+                    onClick={handlePlayVisualization}
+                  >
+                    <Play className="h-4 w-4" />
+                    Play Visualization
+                  </Button>
+                </div>
+              )}
             </div>
 
             <div className="mt-6 grid md:grid-cols-2 gap-6">
@@ -349,20 +435,28 @@ const PatientVisualizations = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredVisualizations.map((vis) => (
                   <Card key={vis.id} className="overflow-hidden hover:shadow-md transition-shadow cursor-pointer" onClick={() => handleVisualizationSelect(vis)}>
-                    <div 
-                      className="aspect-video bg-muted relative"
-                      style={{ 
-                        backgroundImage: `url(${vis.thumbnail})`, 
-                        backgroundSize: 'cover', 
-                        backgroundPosition: 'center' 
-                      }}
-                    >
-                      <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                    <div className="aspect-video bg-muted relative flex items-center justify-center">
+                      {/* Image display with fallback */}
+                      <div 
+                        className="absolute inset-0 bg-cover bg-center z-0"
+                        style={{ backgroundImage: `url(${vis.thumbnail})` }}
+                      />
+                      
+                      {/* Fallback gradient background if image fails */}
+                      <div className={`absolute inset-0 z-0 ${getCategoryGradient(vis.category)}`} />
+                      
+                      {/* Category icon overlay */}
+                      <div className="absolute top-2 left-2 bg-black/60 text-white text-xs px-2 py-1 rounded flex items-center gap-1.5 z-10">
+                        {getCategoryIcon(vis.category)}
+                        <span>{vis.category.charAt(0).toUpperCase() + vis.category.slice(1)}</span>
+                      </div>
+                      
+                      <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded z-10">
                         {vis.duration}
                       </div>
                       <Button 
                         size="icon" 
-                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70"
+                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 z-10"
                       >
                         <Play className="h-6 w-6" />
                       </Button>
