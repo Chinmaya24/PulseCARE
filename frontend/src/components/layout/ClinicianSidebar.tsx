@@ -116,6 +116,13 @@ export const ClinicianSidebar = () => {
               active={location.pathname.startsWith("/clinician/appointments")}
             />
             <SidebarLink
+              to="https://us05web.zoom.us/j/82168267609?pwd=fo7QlUbDgXxG9kddzJQ5exGHVBkCzf.1"
+              external={true}
+              icon={CalendarClock}
+              label="Video Meeting"
+              active={false} // since it's external, route matching doesn't apply
+/>
+            <SidebarLink
               to="/clinician/reports"
               icon={FileText}
               label="Reports"
